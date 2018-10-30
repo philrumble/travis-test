@@ -1,0 +1,16 @@
+sudo: required
+
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: install kubectl
+      script:
+        - |
+          echo 'Installing kubectl';
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl;
+          chmod +x ./kubectl;
+          echo 'Installed kubectl';
+          export TSTAMP=`date +"%Y%m%d%H%M%S"`
+          echo "$TSTAMP"
