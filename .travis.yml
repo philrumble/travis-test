@@ -23,6 +23,6 @@ jobs:
 
 
 after_success:
-  - export TAG=`date +"%Y%m%d%H%M%S`
+    - export TAG=`date +"%Y%m%d%H%M%S"`
   - docker tag philrumble/docker-test:latest philrumble/docker-test:$TAG
   - docker push philrumble/docker-test
