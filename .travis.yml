@@ -10,24 +10,12 @@ before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
   - echo "Docker Hub credentials are working"
     
-
-install:
-  - docker build -t philrumble/docker-test .
-
-deploy:
-  provider: script
-  script: bash docker_push
-  on:
-    branch: master
-
 jobs:
   include:
-    - stage: install kubectl
+    - stage: build docker image
       script:
         - |
-          echo 'Installing kubectl';
-          curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl;
-          chmod +x ./kubectl;
-          echo 'Installed kubectl';
-          export TSTAMP=`date +"%Y%m%d%H%M%S"`
-          echo "$TSTAMP"
+          echo "Building docker image";
+          docker build . -t philrumble/docker-test:latest;
+          docker push philrumble/docker-test:latest;
+
