@@ -19,3 +19,7 @@ jobs:
           docker build . -t philrumble/docker-test:latest;
           docker push philrumble/docker-test:latest;
 
+
+after_success:
+  - export TAG=`date +"%Y%m%d%H%M%S`
+  - docker tag philrumble/docker-test:latest philrumble/docker-test:$TAG
